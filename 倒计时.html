@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>倒计时</title>
+    <style>
+        .div_time{
+            width: 80px;
+            height: 120px;
+            background-color: salmon;
+            float: left;
+            text-align: center;
+            margin: 65px;
+            font-family: fantasy;
+            font-size: 15px;
+            line-height: 120px;
+        }
+    </style>
+</head>
+<body>
+<div class="div_time"></div>
+<div class="div_time"></div>
+<div class="div_time"></div>
+<div class="div_time"></div>
+<div class="div_time"></div>
+<div class="div_time"></div>
+<script>
+    window.onload=function(){
+        setInterval(function(){
+            var div_timeinfo1=document.getElementsByClassName("div_time");
+            var time=new Date(2019,7,1,0,0,0);
+            var time_now=new Date();
+            var time_res=(time.getTime()-time_now.getTime())/1000;
+            var year = parseInt(time_res / (3600 * 24 * 30 * 12));
+            var mon = parseInt(time_res / (3600 * 24 * 30) % 12);
+            var day = parseInt((time_res / (3600 * 24)) % 30);
+            var hour = parseInt(time_res / 3600 % 24);
+            var min = parseInt(time_res / 60 % 60);
+            var sec=parseInt(time_res%60);
+            div_timeinfo1[0].innerHTML=year+"年";
+            div_timeinfo1[1].innerHTML=mon+"月";
+            div_timeinfo1[2].innerHTML=day+"天";
+            div_timeinfo1[3].innerHTML=hour+"时";
+            div_timeinfo1[4].innerHTML=min +"分";
+            div_timeinfo1[5].innerHTML=sec +"秒";
+        },1);
+    }
+</script>
+</body>
+</html>

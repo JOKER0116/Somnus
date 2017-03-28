@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>三级联动</title>
+</head>
+<body>
+省：<select id="sel_s" onchange="changeTxt()">
+    <option>--请选择--</option>
+</select>
+市：<select id="sel_c" onchange="changeTxt_qu()">
+    <option>--请选择--</option>
+</select>
+区：<select id="sel_q">
+    <option>--请选择--</option>
+</select>
+<script>
+    var s_city=["陕西省","湖南省"];
+    var c_city=[
+            ["西安市","咸阳市","商洛市"],
+            ["长沙市","吉首市","湘潭市"]
+    ];
+    var q_city=[
+            [
+                    ["新城区","碑林区","未央区"],
+                    ["秦都区","渭城区"],
+                    ["商州区","七县区"]
+            ],
+            [
+                    ["天心区","雨花区","岳麓区"],
+                    ["古丈区","龙山区"],
+                    ["岳塘区","雨湖区"]
+            ]
+    ];
+    var txt_s=document.getElementById("sel_s");
+    var txt_c=document.getElementById("sel_c");
+    var txt_q=document.getElementById("sel_q");
+    for(var i=0;i<s_city.length;i++){
+        var option=new Option(s_city[i],i);
+        txt_s.appendChild(option);
+    }
+    var qu;
+    function changeTxt() {
+        txt_c.options.length = 1;
+        var index = txt_s.value;
+        var city = c_city[index];
+              qu= q_city[index];
+        for (var i = 0; i < city.length; i++) {
+            var option = new Option(city[i], i);
+            txt_c.appendChild(option);
+        }
+    }
+        function changeTxt_qu(){
+            txt_q.options.length=1;
+            var index_c=txt_c.value;
+            var qu_c=qu[index_c];
+            for(var i=0;i<qu_c.length;i++){
+                var option=new Option(qu_c[i],i);
+                txt_q.appendChild(option);
+            }
+        }
+
+
+
+</script>
+</body>
+</html>

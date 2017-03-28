@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>购物车</title>
+    <style>
+        table{
+            width: 100%;
+          border-collapse: collapse;
+        }
+        tr{
+            background-color: salmon;
+        }
+        td{
+            width: 19%;
+            height: 45px;
+            text-align: center;
+            line-height: 45px;
+            border-bottom: 1px solid silver;
+        }
+        .txt{
+            width: 30px;
+            height: auto;
+            text-align: center;
+            outline: none;
+            border-style: none;
+        }
+        .btn_j,.btn_s{
+            border-style: none;
+            outline: none;
+            width: 20px;
+            height: 19px;
+        }
+        .txt_price{
+            text-align: center;
+            border-style: none;
+            outline: none;
+        }
+        .btn_del,#allcheck,#btn_fan,#btn_deleteall{
+            outline: none;
+            border: none;
+            color: red;
+        }
+        span{
+            font-family:serif;
+            font-size: 15px;
+            color:black;
+        }
+        .txt_price{
+            background-color: silver;
+        }
+    </style>
+    <script>
+       window.onload= function() {
+
+
+           var btn_all = document.getElementById("allcheck");
+           var btn_check = document.getElementsByClassName("btn_ck");
+           var btn_f = document.getElementById("btn_fan");
+           var btn_jian = document.getElementsByClassName("btn_j");
+           var btn_jia = document.getElementsByClassName("btn_s");
+           var txt_num = document.getElementsByClassName("txt");
+           var tr_info = document.getElementsByClassName("tr_list");
+           var td_p = document.getElementsByClassName("td_price");
+           var tr_txtprice = document.getElementsByClassName("txt_price");
+           var btn_delete = document.getElementsByClassName("btn_del");
+           //网页刚加载，所有的加号减号不被点击
+           for( var i=0; i<btn_jia.length;i++){
+               btn_jia[i].disabled=true;
+               btn_jian.disabled=true;
+           }
+           //全选按钮
+           btn_all.onclick = function () {
+               for (var i = 0; i < btn_check.length; i++) {
+                   btn_check[i].checked = true;
+                   btn_jian[i].disabled=false;
+                   btn_jia[i].disabled=false;
+                   tr_info[i].style.backgroundColor = "white";
+               }
+           }
+           //反选按钮
+           btn_f.onclick = function () {
+               for (var i = 0; i < btn_check.length; i++) {
+                   btn_check[i].checked = !btn_check[i].checked;
+                   if (btn_check[i].checked == true) {
+                       tr_info[i].style.backgroundColor = "white";
+                       btn_jian[i].disabled=false;
+                       btn_jia[i].disabled=false;
+                   }
+                   else {
+                       tr_info[i].style.backgroundColor = "salmon";
+                       btn_jia[i].disabled=true;
+                       btn_jian.disabled=true;
+
+                   }
+               }
+           }
+           //减号事件
+           for (var i = 0; i < btn_jian.length; i++) {
+               btn_jian[i].index = i;
+               btn_jian[i].onclick = function () {
+                   var num = txt_num[this.index].value;
+                   num--;
+                   if (num < 0) {
+                       num = 0;
+                   }
+                   txt_num[this.index].value = num;
+                   tr_txtprice[this.index].value = parseInt(td_p[this.index].innerHTML) * txt_num[this.index].value;
+               }
+           }
+           //添加点击按钮后的颜色
+           for (var i = 0; i < btn_check.length; i++) {
+               btn_check[i].index = i;
+               btn_check[i].onclick = function () {
+                   if (btn_check[this.index].checked ==true) {
+                       btn_jian[this.index].disabled=false;
+                       btn_jia[this.index].disabled=false;
+                       tr_info[this.index].style.backgroundColor = "white";
+                   }
+                   else{
+                       tr_info[this.index].style.backgroundColor = "salmon";
+                   }
+               }
+           }
+           //加 号事件
+           for (var i = 0; i < btn_jia.length; i++) {
+               btn_jia [i].index = i;
+               btn_jia[i].onclick = function () {
+                   var num = txt_num[this.index].value;
+                   num++;
+                   txt_num[this.index].value = num;
+                   tr_txtprice[this.index].value = parseInt(td_p[this.index].innerHTML) * txt_num[this.index].value;
+               }
+           }
+           //删除事件
+           for (var i = 0; i < btn_delete.length; i++) {
+               btn_delete[i].onclick = function () {
+                   this.parentElement.parentElement.remove();
+                    shownum();
+               }
+
+           }
+           //更新索性
+              function shownum(){
+           for (var i = 0; i < tr_info.length; i++) {
+               btn_jia[i].index = i;
+               btn_jian[i].index = i;
+               btn_check[i].index = i;
+           }
+             }
+           var delete_all=document.getElementById("btn_deleteall")
+           var countck=btn_check.length
+           delete_all.onclick=function(){
+               for(var i=0;i<countck;i++){
+                   if(btn_check[i].checked==true){
+                      btn_check[i].parentElement.parentElement.remove();
+                       countck--;
+                       i--;
+                   }
+                   shownum();
+               }
+           }
+       }
+
+    </script>
+
+</head>
+<body>
+<table>
+    <tr>
+        <td><input type="button" id="allcheck" value="全选"/></td>
+        <td>名称</td>
+        <td>价钱</td>
+        <td>数量</td>
+        <td>小计</td>
+        <td><input type="button" id="btn_deleteall" value="选择性删除"></td>
+    </tr>
+    <tr class="tr_list">
+        <td><input type="checkbox" value=""class="btn_ck"></td>
+        <td><span>空军一号</span></td>
+        <td class="td_price">799￥</td>
+        <td><input class="btn_j" type="button"value="-"><input type="text"value="0"class="txt"/><input type="button"value="+"
+                                                                                                       class="btn_s"></td>
+        <td><input type="text" class="txt_price"></td>
+        <td><input type="button" value="删除"class="btn_del"></td>
+    </tr>
+    <tr class="tr_list">
+        <td><input type="checkbox" value=""class="btn_ck"></td>
+        <td><span>iphone7</span></td>
+        <td class="td_price">6999￥</td>
+        <td><input class="btn_j" type="button"value="-"><input type="text"value="0"class="txt"/><input type="button"value="+"
+                                                                                                       class="btn_s"></td>
+        <td><input type="text" class="txt_price"></td>
+        <td><input type="button" value="删除"class="btn_del"></td>
+    </tr>
+    <tr class="tr_list">
+        <td><input type="checkbox" value=""class="btn_ck"></td>
+        <td><span>龙族IV</span></td>
+        <td class="td_price">50￥</td>
+        <td><input class="btn_j" type="button"value="-"><input type="text"value="0"class="txt"/><input type="button"value="+"
+                                                                                                       class="btn_s"></td>
+        <td><input type="text" class="txt_price"></td>
+        <td><input type="button" value="删除"class="btn_del"></td>
+    </tr>
+    <tr class="tr_list">
+        <td><input type="checkbox" value=""class="btn_ck"></td>
+        <td><span>机械键盘</span></td>
+        <td class="td_price">600￥</td>
+        <td><input class="btn_j" type="button"value="-"><input type="text"value="0"class="txt"/><input type="button"value="+"
+                                                                                                       class="btn_s"></td>
+        <td><input type="text" class="txt_price"></td>
+        <td><input type="button" value="删除"class="btn_del"></td>
+    </tr>
+    <tr>
+        <td><input type="button" id="btn_fan" value="反选"/></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style=" text-align: right;">总价:</td>
+        <td><input id="totleprice" value="0" type="text"/></td>
+</table>
+</body>
+</html>
