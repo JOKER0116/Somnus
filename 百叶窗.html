@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="file/js/jquery-3.0.0.js"></script>
+    <script>
+        $(function(){
+            $(".li_info").each(function(){
+                $(this).mouseenter(function(){
+                    $(this).stop().animate({"width":"600px"},500,"linear").siblings().stop().animate({"width":"150px"},500,"linear");
+                })
+            })
+        })
+    </script>
+    <style>
+        .li_info{
+            list-style: none;
+            width: 150px;
+            height: 500px;
+            background-color: aqua;
+            border: 1px solid silver;
+            float: left;
+        }
+    </style>
+</head>
+<body>
+<ul>
+    <li class="li_info"></li>
+    <li class="li_info"></li>
+    <li class="li_info"></li>
+    <li class="li_info"></li>
+</ul>
+</body>
+</html>
